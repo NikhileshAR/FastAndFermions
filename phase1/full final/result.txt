@@ -1,0 +1,2 @@
+Zero-intercept fit (t<=0.25): sigma = 2.7672 * sqrt(t)
+R^2 = 0.92276

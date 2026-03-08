@@ -1,0 +1,4 @@
+sigma_core / sigma_Highland summary:
+  Min ratio : 1.6153  at t = 0.03
+  Max ratio : 3.0355  at t = 0.4
+  Mean ratio: 2.0393
