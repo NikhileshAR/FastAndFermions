@@ -1,15 +1,11 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-# ─────────────────────────────────────────
-# Normalised Gaussian (probability density)
-# ─────────────────────────────────────────
+
 def gauss_pdf(x, sigma):
     return (1.0 / (sigma * np.sqrt(2 * np.pi))) * np.exp(-0.5 * (x / sigma)**2)
 
-# ─────────────────────────────────────────
-# FULL DATA
-# ─────────────────────────────────────────
+
 data = {}
 
 data[0.05] = np.array([
@@ -109,9 +105,7 @@ def make_panel(ax, t):
     ax.legend(fontsize=10, loc='lower center')
     ax.grid(True, which='both', alpha=0.3)
 
-# =========================
-# 1 - INDIVIDUAL FIGURES
-# =========================
+
 for t in [0.05, 0.20, 0.40]:
     fig, ax = plt.subplots(figsize=(8, 5))
     make_panel(ax, t)
@@ -123,9 +117,7 @@ for t in [0.05, 0.20, 0.40]:
     plt.savefig('phase2_block1_t' + tname + '.png', dpi=150)
     plt.show()
 
-# =========================
-# 2 - STACKED FIGURE
-# =========================
+
 fig, axes = plt.subplots(3, 1, figsize=(9, 13))
 for ax, t in zip(axes, [0.05, 0.20, 0.40]):
     make_panel(ax, t)

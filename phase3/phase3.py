@@ -2,18 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy.stats import linregress
 
-# ─────────────────────────────────────────
-# Phase 3 — Power Law Observable
-# Goal: Extract alpha from P(theta > theta0) ∝ t^alpha
-# ─────────────────────────────────────────
-# Data from combined histogram PDF
-# Format: { theta0_deg : { thickness : P(theta > theta0) } }
-# ─────────────────────────────────────────
 
-# ─────────────────────────────────────────
-# RAW DATA  (directly from your simulation)
-# theta0 = 10 deg, 100k events
-# ─────────────────────────────────────────
 data_10 = np.array([
     [0.01, 7.00e-05],
     [0.02, 0.00022],
@@ -67,10 +56,7 @@ data_10 = np.array([
     [0.50, 0.05114],
 ])
 
-# ─────────────────────────────────────────
-# theta0 = 12, 15, 18, 20 deg (1M events)
-# From combined histogram PDF
-# ─────────────────────────────────────────
+
 data_12 = np.array([
     [0.01, 8.00e-05],
     [0.05, 0.000738],
@@ -127,9 +113,7 @@ data_20 = np.array([
     [0.50, 0.019551],
 ])
 
-# ─────────────────────────────────────────
-# Package all datasets
-# ─────────────────────────────────────────
+
 datasets = {
     10: data_10,
     12: data_12,
@@ -146,10 +130,7 @@ colors = {
     20: 'seagreen',
 }
 
-# ─────────────────────────────────────────
-# STEP 1 — Log-Log Fit for each threshold
-# Fit: log P = alpha * log t + C
-# ─────────────────────────────────────────
+
 alpha_results = {}
 
 print("=" * 55)
@@ -184,10 +165,7 @@ for theta0, arr in datasets.items():
 
 print("=" * 55)
 
-# ─────────────────────────────────────────
-# PLOT 1 — Log-Log plot for ALL thresholds
-#          on one figure (main summary plot)
-# ─────────────────────────────────────────
+
 fig, ax = plt.subplots(figsize=(10, 7))
 
 for theta0, res in alpha_results.items():
@@ -221,10 +199,7 @@ plt.savefig('phase3_loglog_all.png', dpi=150)
 plt.show()
 print('Saved: phase3_loglog_all.png')
 
-# ─────────────────────────────────────────
-# PLOT 2 — Individual log-log plots
-#          one per threshold angle
-# ─────────────────────────────────────────
+
 fig, axes = plt.subplots(3, 2, figsize=(13, 14))
 axes = axes.flatten()
 
@@ -260,7 +235,7 @@ for idx, (theta0, res) in enumerate(alpha_results.items()):
     ax.legend(fontsize=9)
     ax.grid(True, which='both', alpha=0.3)
 
-# Hide unused subplot (5 datasets, 6 panels)
+
 axes[5].set_visible(False)
 
 plt.suptitle('Phase 3 — Individual Log-Log Fits\n'
@@ -271,10 +246,7 @@ plt.savefig('phase3_loglog_individual.png', dpi=150, bbox_inches='tight')
 plt.show()
 print('Saved: phase3_loglog_individual.png')
 
-# ─────────────────────────────────────────
-# PLOT 3 — Alpha vs Theta0
-#          THIS IS THE PHASE 4 MAIN RESULT
-# ─────────────────────────────────────────
+
 theta0_vals = np.array(sorted(alpha_results.keys()))
 alpha_vals  = np.array([alpha_results[t]['alpha']     for t in theta0_vals])
 alpha_errs  = np.array([alpha_results[t]['alpha_err'] for t in theta0_vals])
@@ -293,7 +265,6 @@ ax.axhline(0.5, color='green', lw=1.5, ls=':',  label='alpha = 0.5  (pure multip
 # Shade the Moliere transition band
 ax.axhspan(1.0, 2.0, alpha=0.08, color='gold', label='Moliere transition band  (1 < alpha < 2)')
 
-# Annotate each point
 for t0, a, ae in zip(theta0_vals, alpha_vals, alpha_errs):
     ax.annotate('alpha = {:.3f}'.format(a),
                 xy=(t0, a), xytext=(5, 8),
@@ -314,9 +285,7 @@ plt.savefig('phase3_alpha_vs_theta0.png', dpi=150)
 plt.show()
 print('Saved: phase3_alpha_vs_theta0.png')
 
-# ─────────────────────────────────────────
-# SUMMARY TABLE
-# ─────────────────────────────────────────
+
 print('\nSummary Table:')
 print('-' * 45)
 print('{:>10}  {:>12}  {:>12}  {:>8}'.format('Theta0', 'Alpha', 'Uncertainty', 'R2'))
@@ -327,7 +296,7 @@ for t0 in theta0_vals:
         t0, r['alpha'], r['alpha_err'], r['r2']))
 print('-' * 45)
 
-# Save results
+
 out = np.column_stack((theta0_vals, alpha_vals, alpha_errs))
 np.savetxt('phase3_results.txt', out,
            header='Theta0(deg)    Alpha    Alpha_err',

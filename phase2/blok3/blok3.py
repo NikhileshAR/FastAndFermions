@@ -1,17 +1,12 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-# ─────────────────────────────────────────
-# Highland Formula
-# ─────────────────────────────────────────
+
 def highland(x, p=500.0):
     ratio = np.where(x > 0, x, 1e-9)
     return np.degrees((13.6 / p) * np.sqrt(ratio) * (1 + 0.038 * np.log(ratio)))
 
-# ─────────────────────────────────────────
-# All stable sigma_core values from Phase 1
-# (t = 0.01 to 0.40 only — stable region)
-# ─────────────────────────────────────────
+
 all_t = np.array([
     0.01,0.02,0.03,0.04,0.05,0.06,0.07,0.08,0.09,0.10,
     0.11,0.12,0.13,0.14,0.15,0.16,0.17,0.18,0.19,0.20,
@@ -28,9 +23,7 @@ all_sigma_core = np.array([
 
 all_sigma_hl = highland(all_t)
 
-# ─────────────────────────────────────────
-# Compute ratio
-# ─────────────────────────────────────────
+
 ratio = all_sigma_core / all_sigma_hl
 
 print("sigma_core / sigma_Highland summary:")
@@ -38,16 +31,14 @@ print("  Min ratio : " + str(round(ratio.min(), 4)) + "  at t = " + str(all_t[ra
 print("  Max ratio : " + str(round(ratio.max(), 4)) + "  at t = " + str(all_t[ratio.argmax()]))
 print("  Mean ratio: " + str(round(ratio.mean(), 4)))
 
-# ═══════════════════════════════════════════════
-# PLOT 1 — Ratio vs thickness
-# ═══════════════════════════════════════════════
+
 fig, ax = plt.subplots(figsize=(9, 5))
 
 ax.plot(all_t, ratio, 'o-', color='purple', ms=6, lw=2, label='sigma_core / sigma_Highland')
 ax.axhline(1.0, color='black', lw=1.5, ls='--', label='Ratio = 1  (perfect Highland agreement)')
 ax.fill_between(all_t, 1.0, ratio, alpha=0.15, color='purple', label='Excess above Highland')
 
-# Annotate the mean line
+
 ax.axhline(ratio.mean(), color='purple', lw=1.0, ls=':', alpha=0.7,
            label='Mean ratio = ' + str(round(ratio.mean(), 3)))
 
@@ -65,10 +56,7 @@ plt.show()
 print('Saved: phase2_block3_ratio_vs_thickness.png')
 
 
-# ═══════════════════════════════════════════════
-# PLOT 2 — sigma_core and sigma_HL on same axes
-#          (to show the gap visually)
-# ═══════════════════════════════════════════════
+
 fig, ax = plt.subplots(figsize=(9, 5))
 
 ax.plot(all_t, all_sigma_core, 'o-', color='royalblue', ms=5, lw=2,
@@ -91,10 +79,7 @@ plt.show()
 print('Saved: phase2_block3_sigma_comparison.png')
 
 
-# ═══════════════════════════════════════════════
-# PLOT 3 — Ratio vs sqrt(thickness)
-#          (shows if ratio scales with sqrt(t))
-# ═══════════════════════════════════════════════
+
 fig, ax = plt.subplots(figsize=(9, 5))
 
 ax.plot(np.sqrt(all_t), ratio, 'o-', color='darkorange', ms=6, lw=2,

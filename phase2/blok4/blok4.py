@@ -71,9 +71,7 @@ def get_R_at_angle(t, angle):
         return np.nan
     return p_data / p_gaus
 
-# ═══════════════════════════════════════════════
-# PLOT 1-3 — Individual (unchanged, already good)
-# ═══════════════════════════════════════════════
+
 for angle, col in zip(fixed_angles, angle_colors):
     R_vals = [get_R_at_angle(t, angle) for t in thicknesses]
     fig, ax = plt.subplots(figsize=(7, 5))
@@ -97,9 +95,7 @@ for angle, col in zip(fixed_angles, angle_colors):
     plt.show()
     print('Saved: phase2_block4_angle' + aname + '.png')
 
-# ═══════════════════════════════════════════════
-# PLOT 4 — Combined: FIX = log y-axis
-# ═══════════════════════════════════════════════
+
 fig, ax = plt.subplots(figsize=(9, 6))
 for angle, col in zip(fixed_angles, angle_colors):
     R_vals = [get_R_at_angle(t, angle) for t in thicknesses]
@@ -125,12 +121,7 @@ plt.savefig('phase2_block4_combined_fixed.png', dpi=150)
 plt.show()
 print('Saved: phase2_block4_combined_fixed.png')
 
-# ═══════════════════════════════════════════════
-# PLOT 5 — Heatmap: FIX = only valid angles per t
-#          use log colorscale, cap extreme values
-# ═══════════════════════════════════════════════
-# Use angles that are within 4*sigma_core for each thickness
-# This ensures Gaussian is meaningful at each cell
+
 heatmap_angles = [1.05, 1.65, 2.25, 2.85, 3.45, 4.05]
 
 R_matrix = np.full((len(heatmap_angles), len(thicknesses)), np.nan)
@@ -138,10 +129,9 @@ for i, angle in enumerate(heatmap_angles):
     for j, t in enumerate(thicknesses):
         R_matrix[i, j] = get_R_at_angle(t, angle)
 
-# Replace nan with 0 for display, keep track of which are invalid
+
 display_matrix = np.where(np.isnan(R_matrix), 0, R_matrix)
 
-# Log colorscale — clip to reasonable range
 log_matrix = np.log10(np.clip(display_matrix, 0.1, 1e5))
 
 fig, ax = plt.subplots(figsize=(8, 6))
@@ -157,7 +147,7 @@ ax.set_title('Block 4 — Tail Ratio R  Heatmap  (log10 colour scale)\n'
              'Red = large tail excess  |  Green = near Gaussian  |  Grey = invalid',
              fontsize=12, fontweight='bold')
 
-# Annotate with actual R values (not log)
+
 for i in range(len(heatmap_angles)):
     for j in range(len(thicknesses)):
         val = R_matrix[i, j]

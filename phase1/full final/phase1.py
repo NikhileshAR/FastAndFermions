@@ -73,12 +73,9 @@ def highland(x, p=500.0):
     return np.degrees((13.6/p) * np.sqrt(ratio) * (1 + 0.038*np.log(ratio)))
 hl = highland(t_s)
 
-# ─────────────────────────────────────────
-# FIX: Force fit through zero (no intercept)
-# sigma = slope * sqrt(t)  — physically correct
-# ─────────────────────────────────────────
+
 lin_mask = t_s <= 0.25
-# Fit with no intercept: minimize sum((sigma - slope*sqrt(t))^2)
+
 slope = np.dot(sqrt_t[lin_mask], sig_s[lin_mask]) / np.dot(sqrt_t[lin_mask], sqrt_t[lin_mask])
 residuals = sig_s[lin_mask] - slope * sqrt_t[lin_mask]
 ss_res = np.sum(residuals**2)
@@ -91,9 +88,7 @@ print("R^2 = " + str(round(r2, 5)))
 fit_x = np.linspace(0, sqrt_t.max(), 300)
 fit_y = slope * fit_x   # passes through origin
 
-# ═══════════════════════════════════════════════
-# PLOT 1 — sigma vs sqrt(t)  +  zero-intercept fit
-# ═══════════════════════════════════════════════
+
 fig, ax = plt.subplots(figsize=(9, 6))
 ax.errorbar(sqrt_t, sig_s, yerr=err_s, fmt='o', color='royalblue',
             ms=5, elinewidth=1, capsize=3, label='Measured sigma_core', zorder=3)
@@ -119,9 +114,7 @@ plt.savefig('sigma_vs_sqrt_thickness.png', dpi=150)
 plt.show()
 print('Saved: sigma_vs_sqrt_thickness.png')
 
-# ═══════════════════════════════════════════════
-# PLOT 2 — sigma vs thickness
-# ═══════════════════════════════════════════════
+
 fig, ax = plt.subplots(figsize=(9, 6))
 ax.errorbar(t_s, sig_s, yerr=err_s, fmt='o', color='royalblue',
             ms=5, elinewidth=1, capsize=3, label='Measured sigma_core', zorder=3)
@@ -144,9 +137,7 @@ plt.savefig('sigma_vs_thickness.png', dpi=150)
 plt.show()
 print('Saved: sigma_vs_thickness.png')
 
-# ═══════════════════════════════════════════════
-# PLOT 3 — Highland comparison
-# ═══════════════════════════════════════════════
+
 fig, ax = plt.subplots(figsize=(9, 6))
 ax.errorbar(sqrt_t, sig_s, yerr=err_s, fmt='o', color='royalblue',
             ms=5, elinewidth=1, capsize=3, label='Measured sigma_core')
@@ -165,7 +156,7 @@ plt.savefig('sigma_vs_sqrt_with_theory.png', dpi=150)
 plt.show()
 print('Saved: sigma_vs_sqrt_with_theory.png')
 
-# Save results table
+
 results = np.column_stack((t_s, sig_s, err_s))
 np.savetxt("phase1_results.txt", results,
            header="Thickness    Sigma(deg)    Sigma_error(deg)", fmt="%.6f")

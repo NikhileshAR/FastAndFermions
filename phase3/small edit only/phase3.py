@@ -5,9 +5,7 @@ import numpy as np
 import csv
 from scipy.stats import linregress
 
-# ─────────────────────────────────────────
-# Load data — keeping per-threshold counts separate
-# ─────────────────────────────────────────
+
 raw = {}
 with open('C:\Nikhilesh\Nikhilesh\Desktop\py_sktip\phase3\small_edit_only\Beamline_-_Events.csv') as f:
     reader = csv.DictReader(f)
@@ -49,9 +47,7 @@ for th in thresholds:
 
 print("="*60)
 
-# ═══════════════════════════════════════════════
-# PLOT 1 — Combined log-log all thresholds
-# ═══════════════════════════════════════════════
+
 fig, ax = plt.subplots(figsize=(9, 6))
 for th, col in zip(thresholds, colors):
     data   = sorted(raw[th], key=lambda x: x[0])
@@ -79,9 +75,7 @@ plt.tight_layout()
 plt.savefig('phase3_loglog_all.png', dpi=150)
 print('Saved: phase3_loglog_all.png')
 
-# ═══════════════════════════════════════════════
-# PLOT 2 — Individual panels
-# ═══════════════════════════════════════════════
+
 fig, axes = plt.subplots(2, 3, figsize=(14, 9))
 axes = axes.flatten()
 for idx, (th, col) in enumerate(zip(thresholds, colors)):
@@ -111,9 +105,7 @@ plt.tight_layout()
 plt.savefig('phase3_loglog_individual.png', dpi=150)
 print('Saved: phase3_loglog_individual.png')
 
-# ═══════════════════════════════════════════════
-# PLOT 3 — Alpha summary
-# ═══════════════════════════════════════════════
+
 alphas = [results[th][0] for th in thresholds]
 errs   = [results[th][1] for th in thresholds]
 

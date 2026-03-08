@@ -20,9 +20,7 @@ def process_dataset(theta, counts, sigma_core, sigma_hl, thickness):
     return theta_full, prob_full, g_core, g_hl
 
 
-# =========================
-# DATA
-# =========================
+
 
 # ---- 0.05 ----
 theta_005 = np.array([0.15,0.45,0.75,1.05,1.35,1.65,1.95,2.25,2.55,2.85,
@@ -51,9 +49,7 @@ counts_040 = np.array([
 23403,17742,13977,11168,9182,7876,6661,5741,5025,4362
 ])
 
-# =========================
-# SIGMA VALUES
-# =========================
+
 
 sigma_005_core = 0.50092
 sigma_005_hl   = 0.30881
@@ -65,18 +61,13 @@ sigma_040_core = 2.88771
 sigma_040_hl   = 0.95133
 
 
-# =========================
-# PROCESS ALL
-# =========================
 
 data_005 = process_dataset(theta_005, counts_005, sigma_005_core, sigma_005_hl, 0.05)
 data_020 = process_dataset(theta_020, counts_020, sigma_020_core, sigma_020_hl, 0.20)
 data_040 = process_dataset(theta_040, counts_040, sigma_040_core, sigma_040_hl, 0.40)
 
 
-# =========================
-# 1️⃣ SEPARATE FIGURES
-# =========================
+
 
 for data, t in zip([data_005, data_020, data_040], [0.05,0.20,0.40]):
     theta_full, prob_full, g_core, g_hl = data
@@ -95,9 +86,7 @@ for data, t in zip([data_005, data_020, data_040], [0.05,0.20,0.40]):
     plt.show()
 
 
-# =========================
-# 2️⃣ STACKED COMPARISON
-# =========================
+
 
 fig, axes = plt.subplots(3, 1, sharex=True)
 

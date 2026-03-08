@@ -69,9 +69,7 @@ def compute_ratio(t):
     return theta, prob_dens, g, R, R_norm, sc
 
 
-# ═══════════════════════════════════════════════
-# PLOT 1 — Individual R(theta) vs theta  [LOG Y]
-# ═══════════════════════════════════════════════
+
 for t, col in zip(thicknesses, colors):
     theta, prob_dens, g, R, R_norm, sc = compute_ratio(t)
     valid = ~np.isnan(R)
@@ -97,9 +95,7 @@ for t, col in zip(thicknesses, colors):
     print('Saved: phase2_block2_Rtheta_fixed_t' + tname + '.png')
 
 
-# ═══════════════════════════════════════════════
-# PLOT 2 — Combined R(theta) vs theta  [LOG Y]
-# ═══════════════════════════════════════════════
+
 fig, ax = plt.subplots(figsize=(9, 6))
 for t, col in zip(thicknesses, colors):
     theta, prob_dens, g, R, R_norm, sc = compute_ratio(t)
@@ -120,9 +116,7 @@ plt.show()
 print('Saved: phase2_block2_Rtheta_fixed_combined.png')
 
 
-# ═══════════════════════════════════════════════
-# PLOT 3 — Individual R vs theta/sigma  [LOG Y]
-# ═══════════════════════════════════════════════
+
 for t, col in zip(thicknesses, colors):
     theta, prob_dens, g, R, R_norm, sc = compute_ratio(t)
     valid = ~np.isnan(R)
@@ -151,9 +145,7 @@ for t, col in zip(thicknesses, colors):
     print('Saved: phase2_block2_Rnorm_fixed_t' + tname + '.png')
 
 
-# ═══════════════════════════════════════════════
-# PLOT 4 — Combined R vs theta/sigma  [LOG Y]
-# ═══════════════════════════════════════════════
+
 fig, ax = plt.subplots(figsize=(9, 6))
 for t, col in zip(thicknesses, colors):
     theta, prob_dens, g, R, R_norm, sc = compute_ratio(t)
