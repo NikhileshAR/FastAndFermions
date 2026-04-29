@@ -1,5 +1,5 @@
 Repository Structure:-
-
+```
 FastAndFermions/
 ├── consolidated_data.csv       
 │
@@ -16,10 +16,11 @@ FastAndFermions/
 │   └── phase3.py               # Power-law extraction & log-log fits
 │
 └── Simulation-GEANT4/          # Submodule (BeamlineProject) containing C++ source
-
+```
 
 Getting Started:-
 1. Python Analysis
+```
   pip install numpy matplotlib scipy
 
   cd "phase1/full final"
@@ -33,13 +34,13 @@ Getting Started:-
 
   cd phase3
   python phase3.py
-
+```
 phase1.py reads `consolidated_data.csv` from the repo root.  
 All scripts save output figures as `.png` in their local directory.
 
 2. GEANT4 Simulation
 See the `Simulation-GEANT4` submodule (BeamlineProject) for the full C++ source.
-
+```
   cd ~/BeamlineProject 
   
   rm -rf build 
@@ -53,5 +54,5 @@ See the `Simulation-GEANT4` submodule (BeamlineProject) for the full C++ source.
   ScatteringAngle_Full->Draw(); gPad->SetLogy();
   ScatteringAngle->Draw(); gPad->SetLogy();
   TTree* t = (TTree*)_file0->Get("scattering"); t->Draw("theta"); t->Draw("energy"); t->Draw("theta","","");
-
+```
 
